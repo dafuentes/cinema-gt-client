@@ -9,6 +9,7 @@ export default function Root() {
   const { auth, state } = useAuth(user);
   const { logout } = auth;
 
+  const [openMobileMenu, setOpenMobileMenu] = useState(false);
   const [openMenu, setOpenMenu] = useState(false);
   const currentUser = state.user;
 
@@ -26,6 +27,7 @@ export default function Root() {
               <div className="relative flex h-16 items-center justify-between">
                 <div className="absolute inset-y-0 left-0 flex items-center sm:hidden">
                   <button
+                    onClick={() => setOpenMobileMenu(!openMobileMenu)}
                     type="button"
                     className="relative inline-flex items-center justify-center rounded-md p-2 text-gray-400 hover:bg-gray-700 hover:text-white focus:outline-none focus:ring-2 focus:ring-inset focus:ring-white"
                     aria-controls="mobile-menu"
@@ -208,38 +210,45 @@ export default function Root() {
                 </div>
               </div>
             </div>
-
-            <div className="sm:hidden" id="mobile-menu">
-              <div className="space-y-1 px-2 pb-3 pt-2">
-                {currentUser && (
-                  <NavLink
-                    to="/dashboard/welcome"
-                    className="bg-gray-900 text-white block rounded-md px-3 py-2 text-base font-medium"
-                    aria-current="page"
-                  >
-                    Dashboard
-                  </NavLink>
-                )}
-                <NavLink
-                  to="/login"
-                  className="text-gray-300 hover:bg-gray-700 hover:text-white block rounded-md px-3 py-2 text-base font-medium"
-                >
-                  Log In
-                </NavLink>
-                <a
-                  href="#"
-                  className="text-gray-300 hover:bg-gray-700 hover:text-white block rounded-md px-3 py-2 text-base font-medium"
-                >
-                  Projects
-                </a>
-                <a
-                  href="#"
-                  className="text-gray-300 hover:bg-gray-700 hover:text-white block rounded-md px-3 py-2 text-base font-medium"
-                >
-                  Calendar
-                </a>
+            {openMobileMenu && (
+              <div className="sm:hidden" id="mobile-menu">
+                <div className="space-y-1 px-2 pb-3 pt-2">
+                  {currentUser && (
+                    <>
+                      <NavLink
+                        to="/dashboard/welcome"
+                        className={({ isActive }) =>
+                          isActive
+                            ? "bg-gray-900 text-white block rounded-md px-3 py-2 text-base font-medium"
+                            : "text-gray-300 hover:bg-gray-700 hover:text-white block rounded-md px-3 py-2 text-base font-medium"
+                        }
+                        aria-current="page"
+                      >
+                        Dashboard
+                      </NavLink>
+                      <NavLink
+                        to="/dashboard/users"
+                        className={({ isActive }) =>
+                          isActive
+                            ? "bg-gray-900 text-white block rounded-md px-3 py-2 text-base font-medium"
+                            : "text-gray-300 hover:bg-gray-700 hover:text-white block rounded-md px-3 py-2 text-base font-medium"
+                        }
+                      >
+                        Users
+                      </NavLink>
+                    </>
+                  )}
+                  {currentUser == null && (
+                    <NavLink
+                      to="/login"
+                      className="text-gray-300 hover:bg-gray-700 hover:text-white block rounded-md px-3 py-2 text-base font-medium"
+                    >
+                      Log In
+                    </NavLink>
+                  )}
+                </div>
               </div>
-            </div>
+            )}
           </nav>
 
           <main>
