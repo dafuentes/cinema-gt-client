@@ -16,6 +16,8 @@ import Home from "./routes/home";
 import Dashboard from "./routes/dashboard";
 import Welcome from "./routes/welcome";
 import { ProtectedLayout } from "./screens/layouts/ProtectedLayout";
+import { loaderDetailMovie, loaderHome } from "./utils/loaders";
+import Movie from "./routes/movie";
 
 const getUserData = () =>
   new Promise((resolve) =>
@@ -53,26 +55,40 @@ const router = createBrowserRouter([
     errorElement: <ErrorPage />,
     loader: checkUser,
     children: [
-      { path: "/", element: <Home /> },
       {
-        path: "/login",
-        element: <Login />,
-        errorElement: <ErrorPage />,
-        loader: isAutenticated,
-      },
-      {
-        path: "/register",
-        element: <Register />,
-        errorElement: <ErrorPage />,
-        loader: isAutenticated,
-      },
-      {
-        path: "/dashboard",
-        element: <ProtectedLayout />,
         errorElement: <ErrorPage />,
         children: [
-          { path: "/dashboard/welcome", element: <Welcome /> },
-          { path: "/dashboard/users", element: <Users /> },
+          {
+            index: true,
+            element: <Home />,
+            loader: loaderHome,
+          },
+          {
+            path: "movie/:movieId",
+            element: <Movie />,
+            loader: loaderDetailMovie,
+          },
+          {
+            path: "/login",
+            element: <Login />,
+            errorElement: <ErrorPage />,
+            loader: isAutenticated,
+          },
+          {
+            path: "/register",
+            element: <Register />,
+            errorElement: <ErrorPage />,
+            loader: isAutenticated,
+          },
+          {
+            path: "/dashboard",
+            element: <ProtectedLayout />,
+            errorElement: <ErrorPage />,
+            children: [
+              { path: "/dashboard/welcome", element: <Welcome /> },
+              { path: "/dashboard/users", element: <Users /> },
+            ],
+          },
         ],
       },
     ],

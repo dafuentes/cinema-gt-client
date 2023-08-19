@@ -21,7 +21,7 @@ export default function Root() {
   return (
     <AuthContext.Provider value={auth}>
       <UserContext.Provider value={currentUser}>
-        <div className="w-full h-screen">
+        <div className="w-full">
           <nav className="bg-gray-800">
             <div className="mx-auto max-w-7xl px-2 sm:px-6 lg:px-8">
               <div className="relative flex h-16 items-center justify-between">
@@ -251,7 +251,7 @@ export default function Root() {
             )}
           </nav>
 
-          <main>
+          <main className="max-w-7xl mx-auto px-6 lg:px-0 py-6">
             <Outlet />
           </main>
         </div>
