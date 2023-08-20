@@ -3,12 +3,13 @@ import { useState } from "react";
 export default function InputNumber({
   className = "",
   children,
+  initValue,
   min,
   max,
   change,
   ...props
 }) {
-  const [value, setValue] = useState(min);
+  const [value, setValue] = useState(initValue);
 
   const increment = () => {
     if (value < parseInt(max)) {

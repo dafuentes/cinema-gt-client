@@ -6,6 +6,8 @@ export async function loaderHome() {
 }
 
 export async function loaderDetailMovie({ params }) {
+  localStorage.removeItem("movie_selected");
+  localStorage.removeItem("info_asientos");
   const movie = await getMovie(params.movieId);
   return { movie };
 }

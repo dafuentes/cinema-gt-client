@@ -6,20 +6,15 @@ export default function Asientos() {
   const navigate = useNavigate();
   const { movieId } = useParams();
   const infoSelected = JSON.parse(localStorage.getItem("movie_selected"));
+  const infoAsientos = JSON.parse(localStorage.getItem("info_asientos"));
+  const initAsientos = infoAsientos ? infoAsientos.totalAsientos : 1;
+  const initSelectedAsientos = infoAsientos ? infoAsientos.asientos : [];
   console.log(infoSelected);
-  const [asientos, setAsientos] = useState(1);
+  console.log(infoAsientos);
+  const [asientos, setAsientos] = useState(initAsientos);
   const [info, setInfo] = useState(infoSelected);
-  const [selectedAsientos, setSelectedAsientos] = useState([]);
-
-  useEffect(() => {
-    console.log(infoSelected.sucursal.sala.seats);
-  }, []);
-
-  useEffect(() => {
-    if (asientos > info.sucursal.sala.seats) {
-      console.log("No hay asientos disponibles");
-    }
-  }, [asientos]);
+  const [selectedAsientos, setSelectedAsientos] =
+    useState(initSelectedAsientos);
 
   const onSelectedSeat = (index) => {
     if (selectedAsientos.includes(index)) {
@@ -51,6 +46,12 @@ export default function Asientos() {
   };
 
   const onNavigateCompra = () => {
+    const infoAsientos = {
+      totalAsientos: asientos,
+      asientos: selectedAsientos,
+    };
+    localStorage.setItem("info_asientos", JSON.stringify(infoAsientos));
+
     navigate(`/movie/${movieId}/compra`);
   };
 
@@ -61,6 +62,7 @@ export default function Asientos() {
           Cantidad de tickets
         </h1>
         <InputNumber
+          initValue={asientos}
           min={1}
           max={info.sucursal.sala.seats}
           change={(e) => setAsientos(e)}
