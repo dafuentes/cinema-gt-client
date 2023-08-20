@@ -251,7 +251,7 @@ export default function Root() {
             )}
           </nav>
 
-          <main className="max-w-7xl mx-auto px-6 lg:px-0 py-6">
+          <main className="max-w-7xl mx-auto px-6 xl:px-0 py-6">
             <Outlet />
           </main>
         </div>

@@ -18,6 +18,8 @@ import Welcome from "./routes/welcome";
 import { ProtectedLayout } from "./screens/layouts/ProtectedLayout";
 import { loaderDetailMovie, loaderHome } from "./utils/loaders";
 import Movie from "./routes/movie";
+import Asientos from "./routes/asientos";
+import Compra from "./routes/compra";
 
 const getUserData = () =>
   new Promise((resolve) =>
@@ -67,6 +69,14 @@ const router = createBrowserRouter([
             path: "movie/:movieId",
             element: <Movie />,
             loader: loaderDetailMovie,
+          },
+          {
+            path: "movie/:movieId/asientos",
+            element: <Asientos />,
+          },
+          {
+            path: "movie/:movieId/compra",
+            element: <Compra />,
           },
           {
             path: "/login",

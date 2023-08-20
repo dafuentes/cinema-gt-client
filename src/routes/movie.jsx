@@ -1,7 +1,7 @@
 import { useLoaderData } from "react-router-dom";
 import { DayPicker } from "react-day-picker";
 import "react-day-picker/dist/style.css";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { format } from "date-fns";
 import { es } from "date-fns/locale";
 import { getSucursales } from "../utils/ApiManager";
@@ -10,19 +10,29 @@ import ListSucursales from "../components/ListSucursales";
 export default function Movie() {
   const { movie } = useLoaderData();
   const [sucursales, setSucursales] = useState([]);
-  const [selectedDate, setSelectedDate] = useState(null);
-  const [formatSelectedDate, setFormatSelectedDate] = useState(null);
   const today = new Date();
+  const [selectedDate, setSelectedDate] = useState(today);
+  const [formatSelectedDate, setFormatSelectedDate] = useState(null);
+
+  const getListSucursales = async (date_selected) => {
+    const dateParam = date_selected ? date_selected : today;
+    const { data } = await getSucursales(movie.id, dateParam);
+    setSucursales(data);
+  };
+
+  useEffect(() => {
+    getListSucursales();
+  }, []);
 
   const onSelectedDate = async (currentDate) => {
     if (currentDate) {
       const formatDate = format(currentDate, "dd/MM/yyyy");
       setFormatSelectedDate(formatDate);
     }
-    const { data } = await getSucursales(movie.id, currentDate);
     setSelectedDate(currentDate);
-    setSucursales(data);
+    getListSucursales(currentDate);
   };
+
   return (
     <div className="grid md:grid-cols-2 gap-14">
       <div className="flex flex-col gap-4">
@@ -61,7 +71,9 @@ export default function Movie() {
           />
         </div>
         <div className="w-full space-y-4">
-          {selectedDate && <ListSucursales sucursales={sucursales} />}
+          {selectedDate && (
+            <ListSucursales movie={movie.id} sucursales={sucursales} />
+          )}
         </div>
       </div>
     </div>
