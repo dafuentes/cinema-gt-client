@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import InputNumber from "../components/InputNumber";
 import { useNavigate, useParams } from "react-router-dom";
+import toast from "react-hot-toast";
 
 export default function Asientos() {
   const navigate = useNavigate();
@@ -25,7 +26,8 @@ export default function Asientos() {
         const listSeats = [...selectedAsientos, index];
         setSelectedAsientos(listSeats);
       } else {
-        alert(`Solo puedes seleccionar ${asientos} asientos`);
+        const pluralAsientos = asientos > 1 ? "asientos" : "asiento";
+        toast.error(`Solo puedes seleccionar ${asientos} ${pluralAsientos}`);
       }
     }
   };

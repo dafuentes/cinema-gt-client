@@ -1,7 +1,16 @@
+import { redirect, useNavigate, useParams } from "react-router-dom";
+import { finishSale, resetLocalStorate } from "../utils/ApiManager";
+import toast from "react-hot-toast";
+
 export default function Compra() {
+  const { movieId } = useParams();
+  const navigate = useNavigate();
   const infoSelected = JSON.parse(localStorage.getItem("movie_selected"));
-  console.log(infoSelected);
   const infoAsientos = JSON.parse(localStorage.getItem("info_asientos"));
+
+  if (!infoSelected) {
+    return <div>Loading</div>;
+  }
 
   const startTime = infoSelected.sucursal.sala.horario.startTime;
   const endTime = infoSelected.sucursal.sala.horario.endTime;
@@ -13,8 +22,23 @@ export default function Compra() {
 
   const total = subTotal * infoAsientos.totalAsientos;
 
-  const onFinalizarCompra = () => {
-    console.log("finalizarcompra");
+  const onFinalizarCompra = async () => {
+    const horario = infoSelected.sucursal.sala.horario.id;
+    const seats = infoAsientos.asientos;
+    /* const result = await finishSale(movieId, horario, seats); */
+    toast
+      .promise(finishSale(movieId, horario, seats), {
+        loading: "Loading...",
+        success: <b>Compra finalizada!</b>,
+        error: <b>Ocurrió un problema, intenta más tarde.</b>,
+      })
+      .then((data) => {
+        const { status } = data;
+        if (status == "success") {
+          navigate("/", { replace: true });
+        }
+      })
+      .catch((error) => console.log("error", error));
   };
 
   return (
@@ -31,23 +55,32 @@ export default function Compra() {
             <h1 className="text-2xl lg:text-4xl font-bold">
               {infoSelected.sucursal.sala.horario.Pelicula.title}
             </h1>
-            <div className="lg:pl-12 mt-6">
-              <div className="text-xl lg:text-3xl font-semibold">
-                {infoSelected.sucursal.name}
+            <div className="flex flex-wrap gap-4 mt-6">
+              <div>
+                <img
+                  className="w-20"
+                  src={infoSelected.sucursal.sala.horario.Pelicula.image}
+                />
               </div>
-              <div className="text-xl lg:text-2xl font-semibold">
-                <span className="text-gray-500 pr-2">Sala:</span>
-                {infoSelected.sucursal.sala.name}
-              </div>
-              <div className="text-xl lg:text-2xl font-semibold">
-                <span className="text-gray-500 pr-2">Función:</span>
-                {startTime} - {endTime}
-              </div>
-              <div className="text-xl lg:text-2xl font-semibold">
-                <span className="text-gray-500 pr-2">Asientos:</span>
-                {infoAsientos.asientos.map((item, index) => (
-                  <span key={item}>{(index ? ", " : "") + (item + 1)}</span>
-                ))}
+              <div className="flex-1">
+                <div className="text-xl lg:text-2xl font-semibold">
+                  <span className="text-gray-500 pr-2">Sucursal:</span>
+                  {infoSelected.sucursal.name}
+                </div>
+                <div className="text-xl lg:text-2xl font-semibold">
+                  <span className="text-gray-500 pr-2">Sala:</span>
+                  {infoSelected.sucursal.sala.name}
+                </div>
+                <div className="text-xl lg:text-2xl font-semibold">
+                  <span className="text-gray-500 pr-2">Función:</span>
+                  {startTime} - {endTime}
+                </div>
+                <div className="text-xl lg:text-2xl font-semibold">
+                  <span className="text-gray-500 pr-2">Asientos:</span>
+                  {infoAsientos.asientos.map((item, index) => (
+                    <span key={item}>{(index ? ", " : "") + (item + 1)}</span>
+                  ))}
+                </div>
               </div>
             </div>
           </div>

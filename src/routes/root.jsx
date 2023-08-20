@@ -3,6 +3,7 @@ import AuthContext from "../context/AuthContext";
 import UserContext from "../context/UserContext";
 import { useAuth } from "../hooks/useAuth";
 import { useContext, useState } from "react";
+import { Toaster } from "react-hot-toast";
 
 export default function Root() {
   const user = useLoaderData();
@@ -256,6 +257,7 @@ export default function Root() {
           </main>
         </div>
       </UserContext.Provider>
+      <Toaster />
     </AuthContext.Provider>
   );
 }

@@ -16,7 +16,12 @@ import Home from "./routes/home";
 import Dashboard from "./routes/dashboard";
 import Welcome from "./routes/welcome";
 import { ProtectedLayout } from "./screens/layouts/ProtectedLayout";
-import { loaderDetailMovie, loaderHome } from "./utils/loaders";
+import {
+  loaderAsientos,
+  loaderCompra,
+  loaderDetailMovie,
+  loaderHome,
+} from "./utils/loaders";
 import Movie from "./routes/movie";
 import Asientos from "./routes/asientos";
 import Compra from "./routes/compra";
@@ -73,10 +78,12 @@ const router = createBrowserRouter([
           {
             path: "movie/:movieId/asientos",
             element: <Asientos />,
+            loader: loaderAsientos,
           },
           {
             path: "movie/:movieId/compra",
             element: <Compra />,
+            loader: loaderCompra,
           },
           {
             path: "/login",
