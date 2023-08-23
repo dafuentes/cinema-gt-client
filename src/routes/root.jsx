@@ -71,27 +71,23 @@ export default function Root() {
                 <div className="flex flex-1 items-center justify-center sm:items-stretch sm:justify-start">
                   <div className="flex flex-shrink-0 items-center">
                     <NavLink to={"/"}>
-                      <img
-                        className="h-8 w-auto"
-                        src="https://tailwindui.com/img/logos/mark.svg?color=indigo&shade=500"
-                        alt="Your Company"
-                      />
+                      <svg
+                        xmlns="http://www.w3.org/2000/svg"
+                        fill="none"
+                        viewBox="0 0 24 24"
+                        strokeWidth="1.5"
+                        stroke="currentColor"
+                        className="w-6 h-6 text-white"
+                      >
+                        <path
+                          strokeLinecap="round"
+                          d="M15.75 10.5l4.72-4.72a.75.75 0 011.28.53v11.38a.75.75 0 01-1.28.53l-4.72-4.72M4.5 18.75h9a2.25 2.25 0 002.25-2.25v-9a2.25 2.25 0 00-2.25-2.25h-9A2.25 2.25 0 002.25 7.5v9a2.25 2.25 0 002.25 2.25z"
+                        />
+                      </svg>
                     </NavLink>
                   </div>
                   <div className="hidden sm:ml-6 sm:block">
                     <div className="flex space-x-4">
-                      {currentUser == null && (
-                        <NavLink
-                          to="/login"
-                          className={({ isActive }) =>
-                            isActive
-                              ? "bg-gray-900 text-white rounded-md px-3 py-2 text-sm font-medium"
-                              : "text-gray-300 hover:bg-gray-700 hover:text-white rounded-md px-3 py-2 text-sm font-medium"
-                          }
-                        >
-                          Sign In
-                        </NavLink>
-                      )}
                       {currentUser && (
                         <>
                           <NavLink
@@ -114,6 +110,16 @@ export default function Root() {
                             }
                           >
                             Usuarios
+                          </NavLink>
+                          <NavLink
+                            to="/dashboard/peliculas"
+                            className={({ isActive }) =>
+                              isActive
+                                ? "bg-gray-900 text-white rounded-md px-3 py-2 text-sm font-medium"
+                                : "text-gray-300 hover:bg-gray-700 hover:text-white rounded-md px-3 py-2 text-sm font-medium"
+                            }
+                          >
+                            Peliculas
                           </NavLink>
                         </>
                       )}

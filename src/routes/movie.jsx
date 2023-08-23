@@ -72,7 +72,11 @@ export default function Movie() {
         </div>
         <div className="w-full space-y-4">
           {selectedDate && (
-            <ListSucursales movie={movie.id} sucursales={sucursales} />
+            <ListSucursales
+              movie={movie.id}
+              sucursales={sucursales}
+              selectedDate={selectedDate}
+            />
           )}
         </div>
       </div>

@@ -1,5 +1,10 @@
 import { redirect } from "react-router-dom";
-import { getMovie, getMovies, resetLocalStorate } from "./ApiManager";
+import {
+  getAsientosOcupados,
+  getMovie,
+  getMovies,
+  resetLocalStorate,
+} from "./ApiManager";
 
 export async function loaderHome() {
   resetLocalStorate();
@@ -13,9 +18,18 @@ export async function loaderDetailMovie({ params }) {
   return { movie };
 }
 
-export async function loaderAsientos() {
-  if (localStorage.getItem("movie_selected")) {
-    return null;
+export async function loaderAsientos({ params }) {
+  if (
+    localStorage.getItem("movie_selected") &&
+    localStorage.getItem("selected_date")
+  ) {
+    const selected_date = localStorage.getItem("selected_date");
+    const { ocupados } = await getAsientosOcupados(
+      params.movieId,
+      params.horarioId,
+      selected_date
+    );
+    return { ocupados };
   } else {
     return redirect("/");
   }

@@ -25,9 +25,10 @@ export default function Compra() {
   const onFinalizarCompra = async () => {
     const horario = infoSelected.sucursal.sala.horario.id;
     const seats = infoAsientos.asientos;
+    const selected_date = localStorage.getItem("selected_date");
     /* const result = await finishSale(movieId, horario, seats); */
     toast
-      .promise(finishSale(movieId, horario, seats), {
+      .promise(finishSale(movieId, horario, seats, selected_date), {
         loading: "Loading...",
         success: <b>Compra finalizada!</b>,
         error: <b>Ocurrió un problema, intenta más tarde.</b>,

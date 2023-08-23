@@ -27,7 +27,7 @@ export default function InputNumber({
 
   const handleValue = (currentValue) => {
     const formatValue = parseInt(currentValue.target.value);
-    if (formatValue >= min) {
+    if (formatValue >= min && formatValue <= max) {
       setValue(formatValue);
       change(formatValue);
     } else {

@@ -1,6 +1,7 @@
-import { redirect, useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
+import { format } from "date-fns";
 
-export default function ListSucursales({ movie, sucursales }) {
+export default function ListSucursales({ movie, sucursales, selectedDate }) {
   const navigate = useNavigate();
 
   if (sucursales.length == 0) {
@@ -27,9 +28,11 @@ export default function ListSucursales({ movie, sucursales }) {
         },
       },
     };
+    console.log("selecteddate", selectedDate);
+    localStorage.setItem("selected_date", format(selectedDate, "yyyy-MM-dd"));
     localStorage.setItem("movie_selected", JSON.stringify(info));
     console.log(info);
-    navigate(`/movie/${movie}/asientos`);
+    navigate(`/movie/${movie}/horario/${horario.id}/asientos`);
   };
 
   return (

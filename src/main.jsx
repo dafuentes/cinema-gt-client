@@ -12,6 +12,7 @@ import ErrorPage from "./error-page";
 import Login from "./routes/login";
 import Register from "./routes/register";
 import Users from "./routes/users/users";
+import Peliculas from "./routes/peliculas/peliculas";
 import Home from "./routes/home";
 import Dashboard from "./routes/dashboard";
 import Welcome from "./routes/welcome";
@@ -76,7 +77,7 @@ const router = createBrowserRouter([
             loader: loaderDetailMovie,
           },
           {
-            path: "movie/:movieId/asientos",
+            path: "movie/:movieId/horario/:horarioId/asientos",
             element: <Asientos />,
             loader: loaderAsientos,
           },
@@ -104,6 +105,7 @@ const router = createBrowserRouter([
             children: [
               { path: "/dashboard/welcome", element: <Welcome /> },
               { path: "/dashboard/users", element: <Users /> },
+              { path: "/dashboard/peliculas", element: <Peliculas /> },
             ],
           },
         ],
