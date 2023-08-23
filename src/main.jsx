@@ -16,7 +16,7 @@ import Peliculas from "./routes/peliculas/peliculas";
 import Home from "./routes/home";
 import Dashboard from "./routes/dashboard";
 import Welcome from "./routes/welcome";
-import { ProtectedLayout } from "./screens/layouts/ProtectedLayout";
+import { ProtectedLayout } from "./layouts/ProtectedLayout";
 import {
   loaderAsientos,
   loaderCompra,
@@ -26,6 +26,7 @@ import {
 import Movie from "./routes/movie";
 import Asientos from "./routes/asientos";
 import Compra from "./routes/compra";
+import Ventas from "./routes/ventas/ventas";
 
 const getUserData = () =>
   new Promise((resolve) =>
@@ -106,6 +107,7 @@ const router = createBrowserRouter([
               { path: "/dashboard/welcome", element: <Welcome /> },
               { path: "/dashboard/users", element: <Users /> },
               { path: "/dashboard/peliculas", element: <Peliculas /> },
+              { path: "/dashboard/ventas", element: <Ventas /> },
             ],
           },
         ],

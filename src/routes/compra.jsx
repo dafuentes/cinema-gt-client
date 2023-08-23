@@ -1,12 +1,14 @@
 import { redirect, useNavigate, useParams } from "react-router-dom";
 import { finishSale, resetLocalStorate } from "../utils/ApiManager";
 import toast from "react-hot-toast";
+import { useState } from "react";
 
 export default function Compra() {
   const { movieId } = useParams();
   const navigate = useNavigate();
   const infoSelected = JSON.parse(localStorage.getItem("movie_selected"));
   const infoAsientos = JSON.parse(localStorage.getItem("info_asientos"));
+  const [disabled, setDisabled] = useState(false);
 
   if (!infoSelected) {
     return <div>Loading</div>;
@@ -23,6 +25,7 @@ export default function Compra() {
   const total = subTotal * infoAsientos.totalAsientos;
 
   const onFinalizarCompra = async () => {
+    setDisabled(true);
     const horario = infoSelected.sucursal.sala.horario.id;
     const seats = infoAsientos.asientos;
     const selected_date = localStorage.getItem("selected_date");
@@ -37,9 +40,14 @@ export default function Compra() {
         const { status } = data;
         if (status == "success") {
           navigate("/", { replace: true });
+        } else {
+          setDisabled(false);
         }
       })
-      .catch((error) => console.log("error", error));
+      .catch((error) => {
+        console.log("error", error);
+        setDisabled(false);
+      });
   };
 
   return (
@@ -96,6 +104,7 @@ export default function Compra() {
         </div>
         <div className="flex justify-center mt-12">
           <button
+            disabled={disabled}
             onClick={onFinalizarCompra}
             className="bg-gray-300 hover:bg-slate-800 hover:text-white w-1/2 lg:w-1/4 py-3 rounded-2xl"
           >

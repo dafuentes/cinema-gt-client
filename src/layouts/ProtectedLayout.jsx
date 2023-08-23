@@ -1,6 +1,6 @@
 import { useContext } from "react";
 import { Link, Navigate, useOutlet } from "react-router-dom";
-import UserContext from "../../context/UserContext";
+import UserContext from "../context/UserContext";
 
 export const ProtectedLayout = () => {
   const outlet = useOutlet();

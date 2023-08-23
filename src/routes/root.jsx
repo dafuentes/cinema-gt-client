@@ -121,6 +121,16 @@ export default function Root() {
                           >
                             Peliculas
                           </NavLink>
+                          <NavLink
+                            to="/dashboard/ventas"
+                            className={({ isActive }) =>
+                              isActive
+                                ? "bg-gray-900 text-white rounded-md px-3 py-2 text-sm font-medium"
+                                : "text-gray-300 hover:bg-gray-700 hover:text-white rounded-md px-3 py-2 text-sm font-medium"
+                            }
+                          >
+                            Ventas
+                          </NavLink>
                         </>
                       )}
 
@@ -242,6 +252,26 @@ export default function Root() {
                         }
                       >
                         Users
+                      </NavLink>
+                      <NavLink
+                        to="/dashboard/peliculas"
+                        className={({ isActive }) =>
+                          isActive
+                            ? "bg-gray-900 text-white block rounded-md px-3 py-2 text-base font-medium"
+                            : "text-gray-300 hover:bg-gray-700 hover:text-white block rounded-md px-3 py-2 text-base font-medium"
+                        }
+                      >
+                        Peliculas
+                      </NavLink>
+                      <NavLink
+                        to="/dashboard/ventas"
+                        className={({ isActive }) =>
+                          isActive
+                            ? "bg-gray-900 text-white block rounded-md px-3 py-2 text-base font-medium"
+                            : "text-gray-300 hover:bg-gray-700 hover:text-white block rounded-md px-3 py-2 text-base font-medium"
+                        }
+                      >
+                        Ventas
                       </NavLink>
                     </>
                   )}
